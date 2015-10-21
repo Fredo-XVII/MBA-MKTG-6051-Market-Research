@@ -1,0 +1,88 @@
+
+ 
+Introduction:
+We are tasked to understand the demand function for an unspecified product.  Demand functions are usually in some type of variation of the functional form: Quantity = Price.  According to economic theory for a normal good, you would expect the quantity of the good to decrease as the price of the good increases.  Of course, there are also other types of goods, such as luxury goods, that increase in demand as the price of the good increases.  After conducting this analysis, we will be able to infer which type of good is represented in the data.
+The Data:
+The original data consists 40 observations and 4 variables. The variables are the number of days, sales in 1000’s of units, price in $, and advertising expense in 1000’s of dollars.  After transformations of the variables, the final dataset included 45 variables.  The transformations include natural log transformations, first differencing of levels, first differencing of natural logs, 3 lags of all the new and old variables, etc.  The data are time series variables and will impact the type of analysis that can be conducted.  Only the final variables will be discussed in this analysis.  The first difference in the natural log (Ln) of sales volume is the dependent variable.  The differencing removes issues with the unit root process of a time series variable.  The explanatory variables are first difference in the Ln(Price), the 1st lag in the difference of the Ln(Price), the 2nd lag of the Ln(Price), the 3rd lag in the Ln(Price), the 2nd lag of the Ln(Ad Spending), and the 1st lag of the Ln(Sales Volume).
+Exploratory Analysis:
+
+Trend analysis 
+The graphs of sales volume (sales_vol_k), unit price (price), and advertising expense (As_spending) is displayed in the appendix.  The graphs clearly show that all the data is trending upward, which can suggest that the data are not stationary, or do not have a constant mean and variance.  The log transformation of volume, price, and ad spending are also graphed in the appendix.  All the series continue to trend upward but not as much as in levels. You can also see that there is a dramatic upward swing after the first 7 days in sales volume.  Finally, the graphs shows that as the price of the good increases, so does the volume.  This suggest that this product may not be a normal good (see appendix for scatter plot).
+
+Unit root test where conducted on each series and the evidence was not significant enough to reject the null hypothesis of a unit root.  A correlogram also confirmed that there is a strong influence from the first 3 lags, but the effect seems to decrease over time.  The decrease counters the test of a unit root to some degree, as unit roots have long memories into the past (these results not shown to preserve space). In any case, we will model sales using the difference in the natural log of sales volume in thousands in order to account for any spurious relationships that arise from the trending process of the series. 
+
+Descriptive and Correlation Analysis:
+
+You will find a table in the appendix with descriptive analysis of the model variables.  You can see from the mean of the differenced variables that the mean is constant with an average about zero.  This satisfies the assumption that the data is stationary.  The correlation between the variables in the levels are extremely high (not shown).  Below are the correlation for the variables in the final model.  
+
+ 
+
+You can see that the dependent variable difference in the Ln(Volume) is highly correlated with the difference in the Ln(Price), the 2nd lag of the Ln(Price), 2nd lag of Ln(Ad spending), 1st lag in Ln(Volume), and the 1st lag in Volume in levels.  
+Regression Methodology:
+
+As we discussed above, there is some evidence that each series may have a unit root process.  This of concern because the usual test for a regression will be spurious.  In other words, you may have significant coefficients even when there is no relationship between the variables.  Although the output is not presented, regressing sales volume by price and ad spending resulted in R squared of over 98% and highly significant coefficients for both the levels, the natural log transformations, and some of the lags.
+
+As a result, we transform the dependent variable by differencing the Ln(volume) series with the 1st lag of Ln(volume).  The approach was to test the first 3 lags of the Ln(Volume), the first 3 lags of the Ln(Price) and first 3 lags of the Ln(Ad spending) along with the trend variable Days, and the lag of sales volume to account for the influences of the volume on itself.  These results can be seen in the table of regression output in the appendix under Model #1.  The output shows that the intercept, the 1st lag of Ln(Sales Volume) and 2nd lag of Ln(Ad Spending) are significant in the model.  The R-square (Rsq) for the model is 51.77, and the adjusted R-square (AdRsq) is 29.67%.  
+
+We used this model to find those lags that are not significant in explaining the changes in 1st difference in Ln(Volume).  We continued to test different variables, but the main focus was to understand how price and ad spend would impact the dependent variable.  So these were never fully removed from the test regressions.  Many model were tested, but the final model will be discussed below.
+Results:
+
+Model #4 is the final model (see appendix).  The model had a total of 7 explanatory variables including the intercept.  Because there are few observations, the focus was to get a higher Rsq with the least number of variables.   Model # 4 is chosen because the model explained 69.28% of variation in the 1st difference of Ln(Volume), which was the highest of all models run.  This is very difficult to do with difference variables, and is a very good result.  The AdRsq for the model is 63.13%, so we don’t lose much of the explanatory power with the number of variables in the model.
+
+The coefficient of the 1st lag of Ln(Volume) is -0.823 and is highly significant with a p-value < 0.0001.  Put differently, for a +1% change in the sale volume in the previous period will lead to a -0.8 percentage point change in the volume.  This could be the result of bringing sales forward as a result of the advertising campaigns.
+
+The coefficient of the 2nd lag of the Ln(Price) is 0.68 and is significant at the 5% level with a p-value <0.0044.  This seems counter-intuitive to economic theory.  So when there is a +1% change in the price 2 periods ago, there is a +0.68 percentage point increase in the volume of sales.  The impact of the 3rd lag in Ln(Price) is 0.384 and highly significant with a p-value <0.01.  It appears that prices are sticky and increasing with this type of product over the previous 3 periods.
+
+The coefficient of the 2nd lag of Ln(Ad spend) is 0.188 and significant at the 5% level with a p-value < 0.05.  In other words, for a +1% increase in ad spend 2 periods ago, sale volume will increase .18 percentage points.  This makes economic sense as consumers need time between airing of the advertisement and when they actually purchase the product.  This process could be impacting the reason why prices are stick 2 and 3 periods back.  It is the ad spending that is driving demand for the product which helps to increase/support the price and keep it up.
+
+The coefficient of the 1st difference of the Ln(Price) is 0.848 and highly significant with a p-value < 0.0001.  Thus, as the difference in price between this period and the last increases by +1 percentage point, the increase in the sales volume from the previous period is 0.85 percentage points.  Finally, the lag of the 1st difference of the Ln(Price) is 0.959 and is highly significant with a p-vlaue <0.0001.  Put differently, as the difference in the price between last period and 2 periods ago increases by +1 percentage point, the increase in the sales volume from the previous period is 0.96 percentage points.   This also supports that prices are sticky and increasing with this product. 
+Conclusion:
+
+This analysis has conducted a time series approach to the demand function for an unspecified product.  It was shown that the product behaves counter to economic intuition concerning a normal good.  One can infer that this product is different, and may be a luxury type of good where higher prices increases the demand for the product.  Another possibility is that this product is new to the market, and it was underpriced at the time of launch.  Thus, as time passes the price is increased making the product appear as if it were a luxury good when in fact it is at the beginning of the product life cycle.
+
+
+
+
+
+
+
+
+Appendix of Tables and Graphs
+
+Graph of data in levels (Sales on right axis)
+ 
+Graph of data in log transformation (Ln(Sales) on right axis) 
+Scatter Plot between Sales volume and price
+ 
+
+Final model variables ( lag_1_ln_vol, lag_3_ln_price, lag_2_ln_price, lag_2_ln_ad on right axis)
+ 
+
+Descriptive Statistics and Correlation 
+Simple Statistics
+Variable	N	Mean	Std Dev	Sum	Minimum	Maximum
+dif_ln_vol	39	0.03281	0.08989	1.2797	-0.09577	0.43511
+lag_1_ln_vol	39	8.01451	0.3799	312.56599	7.07665	8.44849
+lag_2_ln_price	38	3.89035	0.21211	147.83345	3.35829	4.13003
+lag_3_ln_price	37	3.88393	0.21126	143.70551	3.35829	4.13003
+lag_2_ln_ad	38	3.58124	0.3463	136.08714	2.77321	4.03777
+dif_ln_price	39	0.01771	0.07047	0.69086	-0.13275	0.21193
+lag_1_dif_ln_price	38	0.01799	0.07139	0.6835	-0.13275	0.21193
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Regression Output
+ 
